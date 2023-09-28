@@ -1,13 +1,15 @@
-﻿
-
-
+using System;
+using System.IO;
 using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 bool running = true;
 string MenuSelector = "";
 HttpClient httpClient = new HttpClient();
 string UserFruit = "";
 List<string> FruitList = new List<string>();
+List<string> FruitParts = new List<string>();
 
 Console.WriteLine("Welcome to the fruit market. Select what you would like to do by entering a number: ");
 
@@ -32,7 +34,9 @@ while (running)
         if (httpResponse.IsSuccessStatusCode)
         {
             string apiOutput = await httpResponse.Content.ReadAsStringAsync();
-            Console.WriteLine("\n" + apiOutput);
+            string jsonString = JsonSerializer.Serialize(apiOutput);
+            Fruit retrievedFruit = JsonSerializer.Deserialize<Fruit>(jsonString);
+            Console.WriteLine();
 
         }
         else
