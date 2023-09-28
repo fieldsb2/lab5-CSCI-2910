@@ -42,9 +42,16 @@ namespace Fruit_Market
                     if (httpResponse.IsSuccessStatusCode)
                     {
                         string apiOutput = await httpResponse.Content.ReadAsStringAsync();
-                        string jsonString = JsonSerializer.Serialize(apiOutput);
-                        Fruit retrievedFruit = JsonSerializer.Deserialize<Fruit>(jsonString);
-                        Console.WriteLine();
+                        Fruit retrievedFruit = JsonSerializer.Deserialize<Fruit>(apiOutput);
+                        Console.WriteLine($"Name: {retrievedFruit.name}");
+                        Console.WriteLine($"Family: {retrievedFruit.family}");
+                        Console.WriteLine($"Genus: {retrievedFruit.genus}");
+                        Console.WriteLine($"Order: {retrievedFruit.order}");
+                        Console.WriteLine($"Nutritions: ");
+                        foreach (var nutrient in retrievedFruit.nutrition)
+                        {
+                            Console.WriteLine($"{nutrient.Key}: {nutrient.Value}");
+                        }
 
                     }
                     else
