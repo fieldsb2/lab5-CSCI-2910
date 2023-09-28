@@ -4,4 +4,4 @@ I encountered the error that my JSON response is not parsed at all, and will nee
 
 I encountered the problem that I will need to create a fruit class with all properties to properly output the fruit's information.
 
-I encountered the issue that the fruit class that I created is not being recognized within my main method.
+I encountered the issue that the fruit class that I created is not being recognized within my main method. This was corrected by fixing the namespace so that they match.
