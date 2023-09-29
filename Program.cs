@@ -1,17 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 
-namespace Fruit_Market
+namespace FruitMarket
 {
 
-    using System;
-    using System.IO;
-    using System.Net.Http;
-    using System.Text.Json;
-    using System.Text.Json.Serialization;
     public class Driver
     {
 
-        public async void Main()
+        public static async Task Main(string[] args)
         {
             bool running = true;
             string MenuSelector = "";
@@ -38,21 +38,27 @@ namespace Fruit_Market
                     UserFruit = Console.ReadLine();
                     string baseURL = "https://fruityvice.com";
                     string apiURL = $"{baseURL}/api/fruit/{UserFruit}";
+
                     HttpResponseMessage httpResponse = await httpClient.GetAsync(apiURL);
                     if (httpResponse.IsSuccessStatusCode)
                     {
-                        string apiOutput = await httpResponse.Content.ReadAsStringAsync();
-                        Fruit retrievedFruit = JsonSerializer.Deserialize<Fruit>(apiOutput);
-                        Console.WriteLine($"Name: {retrievedFruit.name}");
-                        Console.WriteLine($"Family: {retrievedFruit.family}");
-                        Console.WriteLine($"Genus: {retrievedFruit.genus}");
-                        Console.WriteLine($"Order: {retrievedFruit.order}");
-                        Console.WriteLine($"Nutritions: ");
-                        foreach (var nutrient in retrievedFruit.nutrition)
+                        var options = new JsonSerializerOptions
                         {
-                            Console.WriteLine($"{nutrient.Key}: {nutrient.Value}");
-                        }
+                            WriteIndented = true
+                        };
+                        string apiOutput = await httpResponse.Content.ReadAsStringAsync();
+                        Fruit fruitInfo = JsonSerializer.Deserialize<Fruit>(apiOutput);
+                        Console.WriteLine($"Name: {fruitInfo.Name}");
+                        Console.WriteLine($"ID: {fruitInfo.Id}");
+                        Console.WriteLine($"Family: {fruitInfo.Family}");
+                        Console.WriteLine($"Genus: {fruitInfo.Genus}");
+                        Console.WriteLine($"Order: {fruitInfo.Order}");
 
+                        Console.WriteLine("Nutrition:");
+                        foreach (var kvp in fruitInfo.Nutrition)
+                        {
+                            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+                        }
                     }
                     else
                     {
@@ -104,5 +110,5 @@ namespace Fruit_Market
 
             }
         }
-   }
+    }
 }
