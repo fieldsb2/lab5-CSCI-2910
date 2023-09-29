@@ -7,3 +7,5 @@ I encountered the problem that I will need to create a fruit class with all prop
 I encountered the issue that the fruit class that I created is not being recognized within my main method. This was corrected by fixing the namespace so that they match.
 
 Encountered an issue where I was trying to serialize and deserialize, but realized I only need to deserialize.
+
+Encountered an issue where the properties did not want to print out after being pulled from the JSON, but then realized I could use the JSonPropertyName to set what the name of the property is in JSON versus my program due to casing issues.
